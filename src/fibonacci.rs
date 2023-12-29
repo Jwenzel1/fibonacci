@@ -19,10 +19,7 @@ impl<T> FibonacciSequence<T> {
     }
 }
 
-impl<T> Iterator for FibonacciSequence<T>
-where
-    T: CheckedAdd + Copy,
-{
+impl<T: CheckedAdd + Copy> Iterator for FibonacciSequence<T> {
     type Item = T;
 
     fn next(&mut self) -> Option<Self::Item> {
@@ -44,7 +41,7 @@ where
 
 #[cfg(test)]
 mod tests {
-    use super::{FibonacciSequence, CheckedAdd};
+    use super::{CheckedAdd, FibonacciSequence};
 
     #[derive(Clone, Copy)]
     struct FibonacciNumber(u8);
@@ -53,7 +50,7 @@ mod tests {
         fn checked_add(self, other: Self) -> Option<Self> {
             match self.0.checked_add(other.0) {
                 Some(val) => Some(Self(val)),
-                None => None
+                None => None,
             }
         }
     }
