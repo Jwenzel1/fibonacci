@@ -24,11 +24,11 @@ impl<T: CheckedAdd + Copy> Iterator for FibonacciSequence<T> {
 
     fn next(&mut self) -> Option<Self::Item> {
         let return_value: Option<T>;
-        if self.current.is_some() {
-            return_value = self.current;
-            if self.next.is_some() {
-                self.current = self.next;
-                self.next = self.current.unwrap().checked_add(return_value.unwrap());
+        if let Some(current_val) = self.current {
+            return_value = Some(current_val);
+            if let Some(next_val) = self.next {
+                self.current = Some(next_val);
+                self.next = current_val.checked_add(next_val);
             } else {
                 self.current = None;
             }
