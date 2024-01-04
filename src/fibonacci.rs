@@ -25,9 +25,9 @@ impl<T: CheckedAdd + Copy> Iterator for FibonacciSequence<T> {
     fn next(&mut self) -> Option<Self::Item> {
         let return_value: Option<T>;
         if let Some(current_val) = self.current {
-            return_value = Some(current_val);
+            return_value = self.current;
             if let Some(next_val) = self.next {
-                self.current = Some(next_val);
+                self.current = self.next;
                 self.next = current_val.checked_add(next_val);
             } else {
                 self.current = None;
