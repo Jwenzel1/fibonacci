@@ -1,9 +1,8 @@
-pub trait CheckedAdd
+pub trait CheckedAdd<T>
 where
     Self: Sized,
 {
-    type RHS;
-    fn checked_add(self, other: Self::RHS) -> Option<Self>;
+    fn checked_add(self, other: T) -> Option<Self>;
 }
 
 pub struct FibonacciSequence<T> {
@@ -20,7 +19,7 @@ impl<T> FibonacciSequence<T> {
     }
 }
 
-impl<T: CheckedAdd<RHS = T> + Copy> Iterator for FibonacciSequence<T> {
+impl<T: CheckedAdd<T> + Copy> Iterator for FibonacciSequence<T> {
     type Item = T;
 
     fn next(&mut self) -> Option<Self::Item> {
@@ -47,8 +46,7 @@ mod tests {
     #[derive(Clone, Copy)]
     struct FibonacciNumber(u8);
 
-    impl CheckedAdd for FibonacciNumber {
-        type RHS = FibonacciNumber;
+    impl CheckedAdd<FibonacciNumber> for FibonacciNumber {
         fn checked_add(self, other: Self) -> Option<Self> {
             match self.0.checked_add(other.0) {
                 Some(val) => Some(Self(val)),
