@@ -4,9 +4,9 @@ use fibonacci::{CheckedAdd, FibonacciSequence};
 
 type FibonacciNumber = u128;
 
-impl CheckedAdd<FibonacciNumber> for FibonacciNumber {
+impl CheckedAdd for FibonacciNumber {
     fn checked_add(self, other: Self) -> Option<Self> {
-        self.checked_add(other)
+        FibonacciNumber::checked_add(self, other)
     }
 }
 
